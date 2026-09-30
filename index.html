@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAFIA VZ1 | Portal Oficial & Comunidad</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;0,900;1,400&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            turquoise: '#06b6d4',
+                            turquoiseLight: '#67e8f9',
+                            turquoiseDark: '#0e7490',
+                            dark: '#08080c',
+                            paypal: '#0070ba',
+                            revolut: '#0075ff',
+                            telegram: '#229ED9',
+                            tiktok: '#ff0050',
+                            youtube: '#ff0000',
+                            facebook: '#1877f2',
+                            instagram: '#e1306c'
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite alternate',
+                        'float': 'float 5s ease-in-out infinite',
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { 'box-shadow': '0 0 20px rgba(6, 182, 212, 0.2), 0 0 40px rgba(0, 0, 0, 0.8)' },
+                            '100%': { 'box-shadow': '0 0 35px rgba(6, 182, 212, 0.5), 0 0 70px rgba(6, 182, 212, 0.2)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06060a;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(15, 15, 23, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(22, 22, 34, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px -10px rgba(6, 182, 212, 0.25);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #a5f3fc 0%, #06b6d4 50%, #0e7490 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .urban-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bio-hero-bg {
+            background: linear-gradient(180deg, rgba(6, 6, 10, 0.4) 0%, rgba(6, 6, 10, 0.95) 100%), 
+                        url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #06060a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #272738;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black font-sans">
+
+    <!-- Interactive Canvas Particle Background -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Sidebar Flotante de Redes Sociales (Desktop) -->
+    <aside class="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-3 glass-panel p-2.5 rounded-2xl border border-white/10 shadow-2xl">
+        <a href="https://www.tiktok.com/@mafia.vz1?_r=1&_t=ZP-9A92HyyKFjS" target="_blank" rel="noopener" title="TikTok" class="w-11 h-11 rounded-xl bg-black/60 hover:bg-brand-tiktok text-white flex items-center justify-center text-lg transition-all hover:scale-110">
+            <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a href="https://youtube.com/@mafia.vz1?si=YScv3-nB-gv7gfvO" target="_blank" rel="noopener" title="YouTube" class="w-11 h-11 rounded-xl bg-black/60 hover:bg-brand-youtube text-white flex items-center justify-center text-lg transition-all hover:scale-110">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a href="https://www.facebook.com/share/194bnSoBZm/?mibextid=wwXIfr" target="_blank" rel="noopener" title="Facebook" class="w-11 h-11 rounded-xl bg-black/60 hover:bg-brand-facebook text-white flex items-center justify-center text-lg transition-all hover:scale-110">
+            <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a href="https://t.me/+w3xcMS8n25w1NWZh" target="_blank" rel="noopener" title="Telegram" class="w-11 h-11 rounded-xl bg-black/60 hover:bg-brand-telegram text-white flex items-center justify-center text-lg transition-all hover:scale-110">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="https://www.instagram.com/mafia.vz1?stkn=MWcwZXdod2JqbzZveQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" title="Instagram" class="w-11 h-11 rounded-xl bg-black/60 hover:bg-brand-instagram text-white flex items-center justify-center text-lg transition-all hover:scale-110">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </aside>
+
+    <!-- Navbar Header -->
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-white/10 backdrop-blur-xl">
+        <div class="max-w-6xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <!-- Brand Logo / Name -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-teal-400 to-sky-200 flex items-center justify-center text-black font-black font-display text-xl shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                    M
+                </div>
+                <div>
+                    <span class="font-extrabold font-display text-lg tracking-wider text-white group-hover:text-cyan-400 transition-colors">MAFIA <span class="gold-gradient-text">VZ1</span></span>
+                    <span class="block text-[10px] text-gray-400 font-semibold uppercase tracking-widest">Portal Oficial</span>
+                </div>
+            </a>
+
+            <!-- Menu Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                <a href="#quien-soy" class="text-gray-300 hover:text-cyan-400 transition-colors">¿Quién soy?</a>
+                <a href="#redes" class="text-gray-300 hover:text-cyan-400 transition-colors">Redes Sociales</a>
+                <a href="#donaciones" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 font-bold">
+                    <i class="fa-solid fa-heart text-xs animate-bounce"></i> Apoyar
+                </a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center space-x-2.5">
+                <button id="soundToggleBtn" onclick="toggleAudio()" class="glass-card p-2.5 rounded-xl text-gray-300 hover:text-white hover:border-cyan-400/50 transition-all" title="Sonido de Interacción">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+                <button onclick="shareWebsite()" class="glass-card p-2.5 rounded-xl text-gray-300 hover:text-white hover:border-cyan-400/50 transition-all" title="Compartir Sitio Web">
+                    <i class="fa-solid fa-share-nodes text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="relative z-10 w-full max-w-5xl mx-auto px-4 py-8 space-y-12 flex-grow">
+        
+        <!-- HERO PROFILE HEADER -->
+        <section class="text-center relative pt-4">
+            <!-- Profile Avatar Frame -->
+            <div class="relative inline-block mb-4 animate-float">
+                <div class="absolute -inset-1.5 rounded-full bg-gradient-to-r from-cyan-500 via-teal-400 to-sky-300 blur-lg opacity-70 animate-pulse"></div>
+                <div class="relative w-32 h-32 md:w-36 md:h-36 rounded-full p-1 bg-black overflow-hidden border-2 border-cyan-400/60 shadow-2xl">
+                    <img id="avatarImage" src="image_2.png" 
+                         alt="MAFIA VZ1 Profile" 
+                         class="w-full h-full object-cover rounded-full hover:scale-105 transition-transform duration-500"
+                         onerror="if (this.src.includes('image_2.png')) { this.src='image.png'; } else { this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80'; }">
+                </div>
+                <!-- Verification Badge -->
+                <div class="absolute bottom-1 right-1 bg-cyan-500 text-black p-2 rounded-full shadow-lg text-xs font-black border-2 border-black" title="Canal Verificado">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+            </div>
+
+            <!-- Profile Title & Handle -->
+            <h1 class="text-4xl md:text-5xl font-black font-display tracking-tight text-white mb-2">
+                MAFIA <span class="gold-gradient-text">VZ1</span>
+            </h1>
+            <p class="text-gray-400 font-semibold text-sm md:text-base tracking-wider uppercase mb-4">
+                @mafia.vz1 • Creador de Contenido & Música
+            </p>
+
+            <!-- Quick Badges Grid -->
+            <div class="flex flex-wrap items-center justify-center gap-2 max-w-xl mx-auto mb-6">
+                <span class="glass-card px-3.5 py-1.5 rounded-full text-xs font-semibold text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
+                    <span class="text-base">🇻🇪</span> Orgullo Venezolano
+                </span>
+                <span class="glass-card px-3.5 py-1.5 rounded-full text-xs font-semibold text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-earth-americas text-cyan-400"></i> 4 Países Recorridos
+                </span>
+                <span class="glass-card px-3.5 py-1.5 rounded-full text-xs font-semibold text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-language text-cyan-400"></i> 6 Idiomas / Dialectos
+                </span>
+                <span class="glass-card px-3.5 py-1.5 rounded-full text-xs font-semibold text-indigo-300 border border-indigo-500/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-passport text-indigo-400"></i> Residente en Francia (Asilo)
+                </span>
+                <span class="glass-card px-3.5 py-1.5 rounded-full text-xs font-semibold text-teal-300 border border-teal-500/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-music text-teal-400"></i> Música & Entretenimiento
+                </span>
+            </div>
+
+            <!-- Hero Action CTA -->
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="#donaciones" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-teal-500 to-cyan-600 hover:from-cyan-400 hover:to-teal-400 text-black font-extrabold text-sm shadow-xl shadow-cyan-500/20 transition-all transform active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-dollar text-base"></i> Apoyar Proyecto
+                </a>
+                <a href="#quien-soy" class="px-6 py-3 rounded-xl glass-panel hover:bg-white/10 text-white font-bold text-sm border border-white/15 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-user-gear text-cyan-400"></i> Conocer Mi Historia
+                </a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE BIOGRAFÍA ("QUIÉN SOY") -->
+        <section id="quien-soy" class="relative rounded-3xl overflow-hidden glass-panel border border-cyan-500/20 shadow-2xl">
+            <div class="bio-hero-bg absolute inset-0 opacity-40"></div>
+            
+            <div class="relative z-10 p-6 md:p-10 space-y-8">
+                <!-- Header Title -->
+                <div class="flex items-center space-x-3 border-b border-white/10 pb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-400 flex items-center justify-center text-2xl font-black">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold font-display text-white">¿Quién Soy?</h2>
+                        <p class="text-xs md:text-sm text-cyan-300/80 font-medium">Mi historia y superación personal</p>
+                    </div>
+                </div>
+
+                <!-- Story Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-3">
+                        <div class="flex items-center gap-3 text-cyan-400 font-bold text-lg">
+                            <i class="fa-solid fa-plane-departure text-xl"></i>
+                            <h3>De Venezuela a Europa</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            He recorrido <strong class="text-white">4 países</strong> en busca de superación personal y refugio. Actualmente resido en <strong class="text-white">Francia</strong> bajo la condición de <strong class="text-cyan-400">asilo político</strong>, adaptándome a nuevas culturas y superando desafíos imprevistos con determinación y visión.
+                        </p>
+                        <div class="pt-2 flex items-center gap-2 text-xs text-gray-400 font-semibold">
+                            <i class="fa-solid fa-location-dot text-red-400"></i> Residencia actual: Francia 🇫🇷
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-3">
+                        <div class="flex items-center gap-3 text-cyan-400 font-bold text-lg">
+                            <i class="fa-solid fa-language text-xl"></i>
+                            <h3>Dominio de 6 Idiomas</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            A lo largo de mi viaje he adquirido la capacidad de comunicarme fluidamente en <strong class="text-white">Holandés, Francés, Español, Inglés y Portugués</strong>, además de conocer dialectos autóctonos indígenas que enriquecen mi perspectiva cultural.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">Holandés 🇳🇱</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">Francés 🇫🇷</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">Español 🇻🇪</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">Inglés 🇬🇧</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">Portugués 🇧🇷</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">Dialectos Indígenas 🏹</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GALERÍA DE EMBLEMAS Y PAISAJES DE VENEZUELA -->
+                <div class="pt-6 border-t border-white/10">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-xl">🇻🇪</span> Raíces & Emblemas de Venezuela
+                        </h3>
+                        <span class="text-xs text-cyan-300/80 font-medium">Nuestra Tierra Bendita</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="glass-card rounded-xl overflow-hidden border border-cyan-500/30 group">
+                            <div class="h-36 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Los Roques Venezuela" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <span class="absolute bottom-2 left-2 text-xs font-black text-white bg-black/60 px-2 py-1 rounded-md border border-cyan-400/40 flex items-center gap-1">
+                                    <i class="fa-solid fa-water text-cyan-400"></i> Los Roques
+                                </span>
+                            </div>
+                            <div class="p-3 text-xs text-gray-300">
+                                Archipiélago paradisíaco de agua cristalina y arenas blancas del Caribe venezolano.
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl overflow-hidden border border-cyan-500/30 group">
+                            <div class="h-36 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Salto Ángel y Tepuyes Venezuela" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <span class="absolute bottom-2 left-2 text-xs font-black text-white bg-black/60 px-2 py-1 rounded-md border border-cyan-400/40 flex items-center gap-1">
+                                    <i class="fa-solid fa-mountain text-cyan-400"></i> Salto Ángel & Tepuyes
+                                </span>
+                            </div>
+                            <div class="p-3 text-xs text-gray-300">
+                                La caída de agua más alta del mundo y los imponentes tepuyes de la Gran Sabana.
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl overflow-hidden border border-cyan-500/30 group">
+                            <div class="h-36 overflow-hidden relative bg-gradient-to-br from-yellow-500 via-blue-600 to-red-600 flex items-center justify-center p-4">
+                                <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+                                <div class="relative z-10 text-center space-y-1">
+                                    <div class="w-full h-8 rounded shadow-md overflow-hidden flex border border-white/30">
+                                        <div class="w-1/3 bg-yellow-400"></div>
+                                        <div class="w-1/3 bg-blue-600 flex items-center justify-center text-[8px] text-white tracking-widest font-black">⭐⭐⭐⭐⭐⭐⭐⭐</div>
+                                        <div class="w-1/3 bg-red-600"></div>
+                                    </div>
+                                    <span class="inline-block text-xs font-black text-white tracking-wider uppercase drop-shadow-md">
+                                        Tricolor Nacional
+                                    </span>
+                                </div>
+                                <span class="absolute bottom-2 left-2 text-xs font-black text-white bg-black/60 px-2 py-1 rounded-md border border-cyan-400/40 flex items-center gap-1">
+                                    <span class="text-sm">🇻🇪</span> Venezuela Querida
+                                </span>
+                            </div>
+                            <div class="p-3 text-xs text-gray-300">
+                                Símbolo de identidad, historia, valentía y orgullo para todos los venezolanos.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE REDES SOCIALES OFICIALES -->
+        <section id="redes" class="space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-3xl font-extrabold font-display text-white">
+                    Comunidad & <span class="gold-gradient-text">Redes Sociales</span>
+                </h2>
+                <p class="text-gray-400 text-sm max-w-md mx-auto">
+                    Entra a mis canales oficiales para disfrutar de transmisiones en vivo, videos, consejos y actualizaciones de la comunidad.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="https://www.tiktok.com/@mafia.vz1?_r=1&_t=ZP-9A92HyyKFjS" target="_blank" rel="noopener" onclick="playClickSound()"
+                   class="glass-card p-5 rounded-2xl flex items-center justify-between group cursor-pointer relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-transparent to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center space-x-4 z-10">
+                        <div class="w-12 h-12 rounded-xl bg-black/70 border border-white/10 flex items-center justify-center text-white text-2xl group-hover:scale-110 group-hover:text-pink-500 transition-all">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-base text-white group-hover:text-pink-400 transition-colors flex items-center gap-1.5">
+                                TikTok
+                                <span class="text-[9px] bg-pink-500/20 text-pink-300 font-bold px-2 py-0.5 rounded-full uppercase">Oficial</span>
+                            </div>
+                            <div class="text-xs text-gray-400">@mafia.vz1 • En Vivos & Clips</div>
+                        </div>
+                    </div>
+                    <div class="z-10 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+
+                <a href="https://youtube.com/@mafia.vz1?si=YScv3-nB-gv7gfvO" target="_blank" rel="noopener" onclick="playClickSound()"
+                   class="glass-card p-5 rounded-2xl flex items-center justify-between group cursor-pointer relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-red-600/10 via-transparent to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center space-x-4 z-10">
+                        <div class="w-12 h-12 rounded-xl bg-black/70 border border-white/10 flex items-center justify-center text-red-500 text-2xl group-hover:scale-110 group-hover:text-red-400 transition-all">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-base text-white group-hover:text-red-400 transition-colors">
+                                YouTube
+                            </div>
+                            <div class="text-xs text-gray-400">@mafia.vz1 • Canal Principal</div>
+                        </div>
+                    </div>
+                    <div class="z-10 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/share/194bnSoBZm/?mibextid=wwXIfr" target="_blank" rel="noopener" onclick="playClickSound()"
+                   class="glass-card p-5 rounded-2xl flex items-center justify-between group cursor-pointer relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center space-x-4 z-10">
+                        <div class="w-12 h-12 rounded-xl bg-black/70 border border-white/10 flex items-center justify-center text-blue-500 text-2xl group-hover:scale-110 group-hover:text-blue-400 transition-all">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-base text-white group-hover:text-blue-400 transition-colors">
+                                Facebook
+                            </div>
+                            <div class="text-xs text-gray-400">Página Oficial & Noticias</div>
+                        </div>
+                    </div>
+                    <div class="z-10 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+
+                <a href="https://t.me/+w3xcMS8n25w1NWZh" target="_blank" rel="noopener" onclick="playClickSound()"
+                   class="glass-card p-5 rounded-2xl flex items-center justify-between group cursor-pointer relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-600/10 via-transparent to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center space-x-4 z-10">
+                        <div class="w-12 h-12 rounded-xl bg-black/70 border border-white/10 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 group-hover:text-cyan-300 transition-all">
+                            <i class="fa-brands fa-telegram"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-base text-white group-hover:text-cyan-300 transition-colors flex items-center gap-1.5">
+                                Telegram
+                                <span class="text-[9px] bg-cyan-500/20 text-cyan-300 font-bold px-2 py-0.5 rounded-full uppercase">Grupo Directo</span>
+                            </div>
+                            <div class="text-xs text-gray-400">Comunidad & Chat Directo VIP</div>
+                        </div>
+                    </div>
+                    <div class="z-10 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+
+                <a href="https://www.instagram.com/mafia.vz1?stkn=MWcwZXdod2JqbzZveQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" onclick="playClickSound()"
+                   class="glass-card p-5 rounded-2xl flex items-center justify-between group cursor-pointer relative overflow-hidden sm:col-span-2 lg:col-span-2">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-500/10 to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center space-x-4 z-10">
+                        <div class="w-12 h-12 rounded-xl bg-black/70 border border-white/10 flex items-center justify-center text-pink-500 text-2xl group-hover:scale-110 group-hover:text-pink-400 transition-all">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-base text-white group-hover:text-pink-400 transition-colors">
+                                Instagram Oficial
+                            </div>
+                            <div class="text-xs text-gray-400">@mafia.vz1 • Fotos, historias y contenido diario</div>
+                        </div>
+                    </div>
+                    <div class="z-10 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE COLABORACIONES Y DONACIONES -->
+        <section id="donaciones" class="space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-3xl font-extrabold font-display text-white">
+                    Apoyo & <span class="gold-gradient-text">Donaciones</span>
+                </h2>
+                <p class="text-gray-400 text-sm max-w-md mx-auto">
+                    ¿Te gusta mi contenido y quieres aportar al crecimiento del canal y proyectos? Puedes hacerlo de forma segura a través de los siguientes métodos:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- PayPal Card -->
+                <div class="glass-card p-6 rounded-3xl border border-cyan-500/20 space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-paypal/20 text-blue-400 px-3 py-1 rounded-bl-xl text-xs font-bold border-l border-b border-blue-500/30">
+                        PayPal Seguro
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/40 text-blue-400 flex items-center justify-center text-2xl">
+                            <i class="fa-brands fa-paypal"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Donar por PayPal</h3>
+                            <p class="text-xs text-gray-400">Aporte rápido internacional</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Haz clic en el botón de abajo para enviar tu apoyo mediante tu cuenta de PayPal o tarjeta de crédito/débito.
+                    </p>
+                    <a href="https://www.paypal.com" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-brand-paypal hover:bg-blue-600 text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-heart"></i> Donar con PayPal
+                    </a>
+                </div>
+
+                <!-- Revolut / Transferencia Card -->
+                <div class="glass-card p-6 rounded-3xl border border-cyan-500/20 space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-revolut/20 text-cyan-400 px-3 py-1 rounded-bl-xl text-xs font-bold border-l border-b border-cyan-500/30">
+                        Revolut / IBAN
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-600/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Revolut & Transferencia</h3>
+                            <p class="text-xs text-gray-400">Ideal para Europa y transferencias SEPA</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Utiliza mi enlace de Revolut o solicita los datos bancarios directos para colaborar de forma segura.
+                    </p>
+                    <a href="https://revolut.me" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-brand-revolut hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> Enviar con Revolut
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 w-full glass-panel border-t border-white/10 mt-16 py-8 text-center text-xs text-gray-400 space-y-3">
+        <div class="flex items-center justify-center space-x-2">
+            <span class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-400 flex items-center justify-center font-bold">M</span>
+            <span class="font-bold text-white text-sm">MAFIA VZ1</span>
+        </div>
+        <p>© 2026 MAFIA VZ1. Todos los derechos reservados. Creado con orgullo venezolano 🇻🇪 y residencia en Francia 🇫🇷.</p>
+        <div class="flex justify-center space-x-4 text-gray-400 pt-2">
+            <a href="https://www.tiktok.com/@mafia.vz1" target="_blank" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+            <a href="https://youtube.com/@mafia.vz1" target="_blank" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-youtube"></i> YouTube</a>
+            <a href="https://t.me/+w3xcMS8n25w1NWZh" target="_blank" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-telegram"></i> Telegram</a>
+            <a href="https://www.instagram.com/mafia.vz1" target="_blank" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactions & Particle Background -->
+    <script>
+        // Interactive Canvas Background Particles
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        let numParticles = 40;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(6, 182, 212, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < numParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Audio Interactivity State
+        let soundEnabled = true;
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('soundToggleBtn');
+            if (soundEnabled) {
+                btn.innerHTML = '<i class="fa-solid fa-volume-high text-sm"></i>';
+                btn.classList.remove('border-red-500/50', 'text-red-400');
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-volume-xmark text-sm"></i>';
+                btn.classList.add('border-red-500/50', 'text-red-400');
+            }
+        }
+
+        function playClickSound() {
+            if (!soundEnabled) return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 note
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch (e) {
+                // AudioContext not allowed or supported without user gesture
+            }
+        }
+
+        // Share Website Function
+        function shareWebsite() {
+            playClickSound();
+            if (navigator.share) {
+                navigator.share({
+                    title: 'MAFIA VZ1 | Portal Oficial',
+                    text: '¡Visita el portal oficial y comunidad de MAFIA VZ1!',
+                    url: window.location.href,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('¡Enlace copiado al portapapeles!');
+            }
+        }
+    </script>
+</body>
+</html>
